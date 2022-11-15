@@ -1,4 +1,5 @@
 import com.bank.account.domain.Account;
+import com.bank.account.domain.exception.InsufficientFundsException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,7 +19,7 @@ public class BankAccountTest {
     }
 
     @Test
-    public void should_withdraw_money_in_account() {
+    public void should_withdraw_money_from_account() {
         //GIVEN
         Account account = new Account();
         account.setBalance(1000);
@@ -26,6 +27,15 @@ public class BankAccountTest {
         account.withdraw(500, LocalDate.of(2022, 11, 2));
         //THEN
         Assert.assertEquals(500, 000.1, account.getBalance());
+    }
+
+    @Test(expected = InsufficientFundsException.class)
+    public void should_not_withdraw_money_when_amount_superior_than_balance() {
+        //GIVEN
+        Account account = new Account();
+        account.setBalance(1000);
+        //WHEN
+        account.withdraw(2000, LocalDate.of(2022, 11, 2));
     }
 
     @Test

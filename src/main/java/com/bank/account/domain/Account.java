@@ -1,5 +1,6 @@
 package com.bank.account.domain;
 
+import com.bank.account.domain.exception.InsufficientFundsException;
 import com.bank.account.util.OperationEnum;
 import lombok.Data;
 
@@ -20,7 +21,7 @@ public class Account {
             this.balance -= amount;
             this.setOperation(OperationEnum.WITHDRAWAL, amount, date, this.balance);
         } else {
-            System.out.println("you do not have enough money to withdraw");
+            throw new InsufficientFundsException();
         }
     }
 
